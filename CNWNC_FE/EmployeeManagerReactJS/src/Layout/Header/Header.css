@@ -1,0 +1,212 @@
+.AppEmployee{
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+.nav-link{
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.nav-link:hover{
+    color: rgb(231, 241, 85);
+}
+.adminHeader{
+    padding-left: 200px;
+    background-color: rgb(68, 53, 68);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.adminLogo img{
+    height: 60px;
+    margin-left: -100px;
+    background-image: none;
+    padding: 3px;
+    border-radius: 20px;
+}
+.adminHeader{
+    display: flex;
+}
+.p_user{
+    color: springgreen;
+}
+.adminListNavbar ul{
+    display: flex;
+    position: absolute;
+    margin-top: 20px;
+}
+.adminListNavbar ul li{
+    list-style-type: none;
+    margin-right: 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+Link:hover{
+    color: rgb(207, 32, 32);
+}
+.AdminLog{
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    margin-top: -20px;
+    margin-left: 70px;
+}
+.adminNavbarBtn{
+    margin-top: 20px;
+    display: none;
+    position: fixed;
+    right: 10px;
+}
+
+.adminNavOverlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+.adminListNavbar-Mobile{
+    display: none;
+    transform: translateX(+100%);
+    transition: transform linear 0.2s;
+}
+
+.navInput:checked ~ .adminListNavbar-Mobile{
+    transform: translateX(+30%);
+}
+.navInput:checked ~ .adminNavOverlay{
+    display: block;
+}
+.navInput{
+    display: none;
+}
+.navMobileUsername{
+    display: none;
+}
+
+.fa-user{
+    margin-top: 14px;
+}
+.loggoutBtn{
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 5px;
+}
+.UserDropdown button {
+    color: WHITE;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    margin-left: -40px;
+    font-size: 17px;
+}
+.changePasswordInputUser{
+    margin-left: 0px;
+}
+form.changePasswordForm input {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+.changePasswordInputDevBtn {
+    text-align: center;
+    padding: 10px;
+}
+
+.changePasswordInputDevBtn button{
+    margin: 5px;
+}
+button.btn_cancel {
+    background-color: darkgray;
+}
+button.btn_save {
+    background-color: springgreen;
+}
+/* Mobile Width < 740px */
+@media only screen and  (max-width: 739px){
+    .adminListNavbar{
+        display: none;
+    }
+    .adminNavbarBtn{
+        display: block;
+        font-size: 25px;
+        float: right;
+        cursor: pointer;
+        position: absolute;
+        color: white;
+    }
+    .adminListNavbar-Mobile{
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgb(31, 28, 28);
+        padding-top: 22px;
+    }
+    .adminListNavbar-Mobile ul{
+        position: absolute;
+        margin-top: 20px;
+    }
+    .adminListNavbar-Mobile ul li{
+        list-style-type: none;
+        margin-bottom: 20px;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .adminListNavbar-Mobile-Close{
+        font-size: 20px;
+        color: white;
+        position: fixed;
+        right: 34%;
+        margin-bottom: 20px;
+    }
+    .adminHeader{
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        padding-left: 10px;
+    }
+    .fa-users , .fa-layer-group, .fa-user, .fa-sign-in-alt{
+        color: rgb(141, 238, 162);
+        margin-top: 30px;
+        margin-right: 10px;
+    }
+    .navMobileUsername{
+        display: block;
+        margin-top: -13px;
+        text-transform: uppercase;
+        position: absolute;
+        right: 70px;
+    }
+    .navMobileUsername i{
+        color: rgb(255, 255, 255);
+    }
+    .navMobileUsername h4{
+        color: white;
+    }
+    .loggoutBtn{
+        margin-left: -6px;
+    }
+}
+
+/* Tablet Width >= 740px and width < 1024px
+@media only screen and (min-width: 740px) and (max-width: 1024px){
+    .adminListNavbar{
+        display: none;
+    }
+    .adminNavbarBtn{
+        display: block;
+        font-size: 25px;
+    }
+} */

@@ -1,0 +1,122 @@
+.adminEmployeeTable{
+    font-size: 16px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.adminEmployeeFunction{
+    margin-bottom: 10px;
+    margin-top: 70px;
+    text-align: right;
+}
+.adminEmployeeCreateNew button{
+    margin-left: 40px;
+    font-size: 16px;
+    float: left;
+    box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
+}
+.adminEmployeeSearch input{
+    font-size: 16px;
+    width: 150px;
+    box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
+}
+.adminEmployeeSearch button{
+    font-size: 16px;
+}
+.nameEmployeeBtn{
+    background: none;
+    border: none;
+}
+
+/* Create New */
+.modal-dialog-em{
+    width: 650px;
+    text-align: center;
+}
+.modal-dialog-employee{
+    text-align: center;
+    position: fixed;
+    top: 0;
+}
+.modalEmployBody{
+    margin-top: 30px;
+    margin-left: 50px;
+    text-align: left;
+}
+.loginInputDev h4{
+    margin-left: 30px;
+}
+.modalEmployBodyContent{
+    display: table-row;
+    margin-left: 50px;
+}
+.modal-title{
+    text-transform: uppercase;
+}
+.close{
+    color: white;
+    opacity: 0.8;
+}
+.modal-content{
+    color: white;
+    background-color: rgb(68, 53, 68);
+}
+.modal-body{
+    display: flex;
+}
+.createDepartment{
+    text-align: left;
+    display: table-row;
+}
+.createDepartment label{
+    text-transform: uppercase;
+    width: 50%;
+    padding-left: 20px;
+    display: table-cell;
+}
+.createDepartment input{
+    display: table-cell;
+    margin-bottom: 15px;
+    color: black;
+}
+.createDepartmentBtn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btn-close{
+    background-color: white;
+    margin-right: 10px;
+    color: tomato;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.btn-save{
+    margin-left: 10px;
+    color: tomato;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.nameDepartmentBtn{
+    background: none;
+    border: none;
+}
+.employeeDepartmentImg{
+    width: 70px;
+    height: 50px;
+}
+.employeeDepartmentImgDetail{
+    width: 254px;
+    height: 293px;
+}
+/* Phân Trang */
+.phanTrangBtn{
+    text-align: center;
+    padding: 40px;
+}
+/* Mobile Width < 740px */
+@media only screen and  (max-width: 739px){
+    .adminEmployeeTable {
+        padding: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
