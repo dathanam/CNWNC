@@ -18,13 +18,6 @@ export class ChitietphieuxuatController {
     }
   
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(Role.USER, Role.ADMIN, Role.PREMIUM)
-    @Get(':id')
-    get(@Param() params) {
-      return this.service.findOne(params.id);
-    }
-  
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(Role.ADMIN, Role.PREMIUM)
     @Post()
     create(@Body() body) {
@@ -36,5 +29,11 @@ export class ChitietphieuxuatController {
     @Delete(':id')
     deleteUser(@Param() params) {
       return this.service.delete(params.id);
+    }
+
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @Get(':id')
+    findDetail(@Param() params) {
+      return this.service.findDetail(params.id);
     }
 }

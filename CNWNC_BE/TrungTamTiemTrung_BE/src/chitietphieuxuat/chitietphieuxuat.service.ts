@@ -2,12 +2,14 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { chitietphieuxuat } from './chitietphieuxuat.entity'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { VacxinService } from 'src/vacxin/vacxin.service';
 
 @Injectable()
 export class ChitietphieuxuatService {
     constructor(
         @InjectRepository(chitietphieuxuat)
         private readonly Repo: Repository<chitietphieuxuat>,
+        private vacxinRepo: VacxinService,
     ) { }
 
     async findAll(): Promise<chitietphieuxuat[]> {
@@ -18,13 +20,18 @@ export class ChitietphieuxuatService {
         return await this.Repo.findOne(id)
     }
 
-    async create(dataCTPN: chitietphieuxuat): Promise<any> {
+    async findDetail(id: number): Promise<chitietphieuxuat[]> {
+        return await this.Repo.find({idphieuxuat: id});
+    }
+
+    async create(dataCTPX: chitietphieuxuat): Promise<any> {
         try {
+            const check = await this.vacxinRepo.findOne(dataCTPX.idvacxin)
             const newCTPN= new chitietphieuxuat();
-            newCTPN.soluong = dataCTPN.soluong;
-            newCTPN.thanhtien = dataCTPN.thanhtien;
-            newCTPN.idphieuxuat = dataCTPN.idphieuxuat;
-            newCTPN.idvacxin = dataCTPN.idvacxin;
+            newCTPN.soluong = dataCTPX.soluong;
+            newCTPN.thanhtien = check.dongia * dataCTPX.soluong
+            newCTPN.idphieuxuat = dataCTPX.idphieuxuat;
+            newCTPN.idvacxin = dataCTPX.idvacxin;
 
             await this.Repo.save(newCTPN);
             return { statusCode: 200, message: "Thêm thành công!", newCTPN};

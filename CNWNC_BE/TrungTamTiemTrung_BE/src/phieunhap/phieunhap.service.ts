@@ -3,7 +3,6 @@ import { phieunhap } from './phieunhap.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ChitietphieunhapService } from 'src/chitietphieunhap/chitietphieunhap.service';
-import { ID } from '@nestjs/graphql';
 
 @Injectable()
 export class PhieunhapService {
@@ -26,7 +25,6 @@ export class PhieunhapService {
             const newPN = new phieunhap();
             newPN.ngay = dataPN.ngay;
             newPN.idnhanvien = dataPN.idnhanvien;
-            newPN.idnhacungcap = dataPN.idnhacungcap;
             newPN.tongtien = 0;
             newPN.trangthai = false;
             await this.PNRepo.save(newPN);
@@ -40,6 +38,10 @@ export class PhieunhapService {
         try {
             const check = await this.PNRepo.findOne({ id: id })
             if (!check) return { statusCode: 404, message: "Phiếu nhập không tồn tại trong hệ thống !" };
+            const ListDetail = await this.CTPhieuNhapRepo.findDetail(id);
+            for(var i in ListDetail){
+                await this.CTPhieuNhapRepo.delete(ListDetail[i].id);
+            }
             await this.PNRepo.delete(id);
             return { statusCode: 200, message: "Xóa thành công !" }
         } catch (error) {
@@ -47,17 +49,19 @@ export class PhieunhapService {
         }
     }
 
-    async update(id){
+    async update(idPN: number){
         try {
-            const ListDetail = await this.CTPhieuNhapRepo.findDetail(id.id);
-            let Tong = 0;
+            console.log("CTPN", idPN)
+            var ListDetail = await this.CTPhieuNhapRepo.findDetail(Object.values(idPN)[0]);
+            var Tong = 0;
             for(var i in ListDetail){
-                Tong = Tong+parseInt(ListDetail[i].thanhtien)
+                Tong += ListDetail[i].thanhtien
             }
-            let nv = await this.PNRepo.findOne({id: id})
+            console.log(Tong)
+            let nv = await this.PNRepo.findOne(idPN)
             nv.tongtien = Tong;
             nv.trangthai = true;
-            await this.PNRepo.update(id.id, nv);
+            await this.PNRepo.update(idPN, nv);
             return { statusCode: 200, message: "Sửa thành công !"}
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)

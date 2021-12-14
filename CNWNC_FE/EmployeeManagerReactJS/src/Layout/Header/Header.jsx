@@ -102,10 +102,7 @@ function Header() {
                         <Link to="/admin/phieunhap" className="nav-link">Phiếu nhập</Link>
                     </li>
                     <li>
-                        <Link to="/phieuxuat" className="nav-link">Phiếu xuất</Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/nhacungcap" className="nav-link">Nhà cung cấp</Link>
+                        <Link to="/admin/phieuxuat" className="nav-link">Phiếu xuất</Link>
                     </li>
                     <li>
                         <Link to="/admin/employee" className="nav-link">Trung tâm</Link>

@@ -32,6 +32,7 @@ export default {
   getVacxin: () => axios.get("/vacxin"),
   createVacxin: (data) => axios.post('/vacxin', data),
   deleteVacxin: (id) => axios.delete('vacxin/' + id),
+  updateSoLuong:(id, data) => axios.put('vacxin/' + id, data),
 
   // Nhà cung cấp
   getNhaCungCap: () => axios.get("/nhacungcap"),
@@ -42,7 +43,6 @@ export default {
   //Phiếu nhập
   getPhieuNhap: () => axios.get("/phieunhap"),
   createPhieuNhap: (data) => axios.post('/phieunhap', data),
-  editPhieuNhap: (id, data) => axios.put('/phieunhap/'+ id, data),
   deletePhieuNhap: (id) => axios.delete('/phieunhap/' + id),
   updatePhieuNhap: (id) => axios.put('/phieunhap/'+ id),
 
@@ -50,4 +50,18 @@ export default {
   // Chi tiết phiếu nhập
   createChiTietPhieuNhap:(data) => axios.post('/chitietphieunhap', data),
   getDetail: (idPhieuNhap) => axios.get('/chitietphieunhap/'+idPhieuNhap),
+
+  //Phiếu Xuat
+  getPhieuXuat: () => axios.get("/phieuxuat"),
+  createPhieuXuat: (data) => axios.post('/phieuxuat', data),
+  deletePhieuXuat: (id) => axios.delete('/phieuxuat/' + id),
+  updatePhieuXuat: (id) => axios.put('/phieuxuat/'+ id),
+
+  // Trung tâm
+  getTrungTam: () => axios.get("/trungtam"),
+
+  //Chi tiết phiếu xuất
+  createChiTietPhieuXuat:(data) => axios.post('/chitietphieuxuat', data),
+  getDetailPX:(idPhieuXuat) => axios.get('/chitietphieuxuat/'+idPhieuXuat),
+
 }

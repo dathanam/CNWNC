@@ -41,12 +41,12 @@ export class VacxinService {
         }
     }
 
-    async update(data: vacxin, id: number): Promise<any> {
+    async updateSoLuong(id: number, soluong: number): Promise<any> {
+        console.log(id, soluong)
         try {
             const vx = await this.vacxinRepo.findOne({id: id})
             if(!vx) return { statusCode: 404, message: "vacxin không tồn tại trong hệ thống !" };
-            vx.soluong = data.soluong;
-            vx.dongia = data.dongia;
+            vx.soluong = vx.soluong-soluong;
             await this.vacxinRepo.update(id, vx);
             return { statusCode: 200, message: "Sửa thành công !"}
         } catch (error) {

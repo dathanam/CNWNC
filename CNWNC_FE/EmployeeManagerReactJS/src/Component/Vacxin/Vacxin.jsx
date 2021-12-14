@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../Vacxin/Vacxin.css';
-import { useHistory } from "react-router-dom";
 import api from '../../API';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,7 +7,6 @@ import Modal from '@mui/material/Modal';
 import TextField from '@material-ui/core/TextField';
 
 function Vacxin() {
-    const history = useHistory();
     const moment = require('moment')
 
     const [listVacxin, setListVacxin] = useState([]);
@@ -113,7 +111,7 @@ function Vacxin() {
 
     return (
         <div className="table_admin">
-            <button className="btn_add" onClick={CreateOpen}>Tạo mới</button>
+            <button className="btn btn-primary" onClick={CreateOpen}>Tạo mới</button>
             <table id="customers">
                 <tr>
                     <th>id</th>

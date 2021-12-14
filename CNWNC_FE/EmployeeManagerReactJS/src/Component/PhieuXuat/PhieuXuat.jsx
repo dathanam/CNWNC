@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import './PhieuNhap.css'
+import './PhieuXuat.css'
 import api from '../../API';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@material-ui/core/TextField';
-import '../PhieuNhap/PhieuNhap.css';
 
-function PhieuNhap() {
+function PhieuXuat() {
+
     const moment = require('moment')
-    // get List vacxin
-    const [listVacxin, setListVacxin] = useState([{}]);
-    const getArrListVacxin = async () => {
-        const response = await api.getVacxin()
+
+    const [listPhieuXuat, setListPhieuXuat] = useState([]);
+    const getArrListPhieuXuat = async () => {
+        const response = await api.getPhieuXuat()
         if (response && response.data) {
-            setListVacxin(response.data)
+            setListPhieuXuat(response.data)
         }
     }
 
-    //list Nhân Viên
     const [listNhanVien, setListNhanVien] = useState([]);
     const getArrNV = async () => {
         const response = await api.getNhanVien()
@@ -27,19 +26,156 @@ function PhieuNhap() {
         }
     }
 
-    const [listPhieuNhap, setListPhieuNhap] = useState([]);
-    const getArr = async () => {
-        const response = await api.getPhieuNhap()
+    const [listTrungTam, setListTrungTam] = useState([]);
+    const getArrTT = async () => {
+        const response = await api.getTrungTam()
         if (response && response.data) {
-            setListPhieuNhap(response.data)
+            setListTrungTam(response.data)
+        }
+    }
+
+    const [listVacxin, setListVacxin] = useState([]);
+    const getArrListVacxin = async () => {
+        const response = await api.getVacxin()
+        if (response && response.data) {
+            setListVacxin(response.data)
         }
     }
 
     useEffect(() => {
+        getArrListPhieuXuat();
+        getArrTT();
         getArrListVacxin();
-        getArr();
         getArrNV();
     }, []);
+
+    const [create, setCreate] = React.useState(false);
+    const createsOpen = () => setCreate(true);
+    const createClose = () => setCreate(false);
+    const [addDetails, setAddDetails] = React.useState(false);
+    const addDetailsOpen = () => setAddDetails(true);
+    const addDetailsClose = () => setAddDetails(false);
+    const [soLuong, setSoLuong] = React.useState(false);
+    const soLuongOpen = () => setSoLuong(true);
+    const soLuongClose = () => setSoLuong(false);
+    const [viewDetail, setViewDetail] = React.useState(false);
+    const viewDetailOpen = () => setViewDetail(true);
+    const viewDetailClose = () => setViewDetail(false);
+    const [deleteModel, setDeleteModel] = React.useState(false);
+    const deleteOpen = () => setDeleteModel(true);
+    const deleteClose = () => setDeleteModel(false);
+
+    const [dataCreateDetail, setDataCreateDetail] = useState([])
+    const [detail, setDetail] = useState({
+        soluong: "",
+        idvacxin: "",
+        dongia: ""
+    });
+    const [tongTien, setTongTien] = useState({
+        sum: 0
+    })
+
+    const [dataCreate, setDataCreate] = useState({
+        idnhanvien: localStorage.getItem("idNV"),
+        idtrungtam: "",
+        ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
+        tongtien: "",
+        trangthai: false
+    });
+
+    const updateTongTien = async () => {
+        const newdata = { ...dataCreate };
+        newdata.tongtien = tongTien.sum;
+        setDataCreate(newdata)
+    }
+    useEffect(() => {
+        updateTongTien();
+    }, [tongTien.sum]);
+
+    function submitCreateDetail(id) {
+        dataCreateDetail.map(item => {
+            var newdata = { ...item, idphieuxuat: id }
+            api.createChiTietPhieuXuat(newdata)
+            var newdataSL = { soluong: item.soluong}
+            console.log(newdataSL)
+            api.updateSoLuong(item.idvacxin, newdataSL)
+        })
+        setDataCreateDetail([])
+    }
+
+    function submitDataCreate() {
+        api.createPhieuXuat(dataCreate)
+            .then((res) => {
+                if (res.data.statusCode === 200) {
+                    submitCreateDetail(res.data.newPN.id)
+                    setDataCreate({
+                        idnhanvien: localStorage.getItem("idNV"),
+                        idtrungtam: "",
+                        ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
+                        tongtien: "",
+                        trangthai: false
+                    })
+                    window.location.reload()
+                } else {
+                    alert("Error")
+                    setDataCreate({
+                        idnhanvien: localStorage.getItem("idNV"),
+                        idtrungtam: "",
+                        ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
+                        tongtien: "",
+                        trangthai: false
+                    })
+                    setDataCreateDetail([])
+                }
+            })
+            .catch((err) => {
+                setDataCreate({
+                    idnhanvien: localStorage.getItem("idNV"),
+                    idtrungtam: "",
+                    ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
+                    tongtien: "",
+                    trangthai: false
+                })
+                setDataCreateDetail([])
+            })
+    }
+
+    const handleAddDetail = (event) => {
+        const newdata = { ...detail };
+        newdata[event.target.id] = event.target.value;
+        setDetail(newdata);
+    };
+
+    function handleCreate(event) {
+        const newdata = { ...dataCreate };
+        newdata[event.target.name] = event.target.value;
+        setDataCreate(newdata);
+    }
+
+    const [idPhieuNhap, setIdPhieuNhap] = useState({
+        id: "",
+    });
+    const [listCTPX, setListCTPX] = useState([]);
+    const getDetail = async () => {
+        const response = await api.getDetailPX(idPhieuNhap.id)
+        if (response && response.data) {
+            setListCTPX(response.data)
+        }
+    }
+    useEffect(() => {
+        getDetail()
+    }, [idPhieuNhap.id]);
+
+    const [deletePhieuXuat, setDeletePhieuXuat] = useState({});
+    function submitDelete() {
+        api.deletePhieuXuat(deletePhieuXuat.id)
+    }
+
+
+
+
+
+
 
     const style = {
         position: 'absolute',
@@ -63,140 +199,36 @@ function PhieuNhap() {
         boxShadow: 24,
         p: 4,
     }
-
-    // Create phiếu nhập
-    const [newData, setNewData] = useState({
-        ngay: "",
-        idnhanvien: ""
-    })
-    function submitCreatePhieuNhap() {
-        if(newData != null) {
-            api.createPhieuNhap(newData)
-                .then((res) => {
-                    if (res.data.statusCode === 200) {
-                        if (res.data.statusCode === 200) {
-                            alert("Tạo thành công");
-                            window.location.reload()
-                        } else {
-                            alert("Kiểm tra lại")
-                        }
-                    }
-                })
-                .catch((err) => {
-                })
-        }
-    }
-    useEffect(() => {
-        submitCreatePhieuNhap();
-    }, [newData.ngay]);
-    //end create
-
-    //delete
-    const [deletePhieuNhap, setDeletePhieuNhap] = useState([{}]);
-    const [deleteModel, setDeleteModel] = React.useState(false);
-    const deleteOpen = () => setDeleteModel(true);
-    const deleteClose = () => setDeleteModel(false);
-    function submitDelete() {
-        api.deletePhieuNhap(deletePhieuNhap.id)
-    }
-    //end delete
-
-    //add detail
-    const [details, setdetails] = React.useState(false);
-    const detailsOpen = () => setdetails(true);
-    const detailsClose = () => setdetails(false);
-
-    const [addDetails, setAddDetails] = React.useState(false);
-    const addDetailsOpen = () => setAddDetails(true);
-    const addDetailsClose = () => setAddDetails(false);
-
-    const [soLuong, setSoLuong] = React.useState(false);
-    const soLuongOpen = () => setSoLuong(true);
-    const soLuongClose = () => setSoLuong(false);
-
-    const [idPhieuNhap, setIdPhieuNhap] = useState({
-        id: "",
-    });
-
-    const [listDetail, setListDetail] = useState([{}]);
-    const [detail, setDetail] = useState({
-        soluong: "",
-        idvacxin: "",
-    });
-    const handleAddDetail = (event) => {
-        const newdata = { ...detail };
-        newdata[event.target.id] = event.target.value;
-        setDetail(newdata);
-    };
-
-    function submitCreateDetail() {
-        listDetail.map(item => {
-            var newdata = { ...item, idphieunhap: idPhieuNhap.id }
-            api.createChiTietPhieuNhap(newdata)
-        })
-        api.updatePhieuNhap(idPhieuNhap.id)
-        setDetail({
-            soluong: "",
-            idvacxin: "",
-        })
-        setListDetail([{
-            soluong: "",
-            idvacxin: "",
-        }])
-    }
-
-    // View Detail
-    //getChiTietPhieuNhap
-    const [listCTPN, setListCTPN] = useState([]);
-    const getDetail = async () => {
-        const response = await api.getDetail(idPhieuNhap.id)
-        if (response && response.data) {
-            setListCTPN(response.data)
-        }
-    }
-    useEffect(() => {
-        getDetail()
-    }, [idPhieuNhap.id]);
-
-    const [viewDetail, setViewDetail] = React.useState(false);
-    const viewDetailOpen = () => setViewDetail(true);
-    const viewDetailClose = () => setViewDetail(false);
-    //End view detail
-
     return (
         <div className="table_admin">
-            <button className="btn btn-primary" onClick={() => setNewData({
-                ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
-                idnhanvien: localStorage.getItem("idNV")
-            })}>Tạo mới</button>
+            <button className="btn btn-primary" onClick={createsOpen}>Tạo mới</button>
             <table id="customers">
                 <tr>
                     <th>id</th>
                     <th>Ngày</th>
                     <th>Nhân viên</th>
+                    <th>Cơ sở</th>
+                    <th>Trạng thái</th>
                     <th>Tổng tiền</th>
-                    <th>chức năng</th>
+                    <th>#</th>
                 </tr>
                 {
-                    listPhieuNhap.map((item) => {
+                    listPhieuXuat.map((item) => {
                         return (
                             <tr>
                                 <td>{item.id}</td>
                                 <td>{moment(item.ngay).utc().format('DD/MM/YYYY')}</td>
                                 <td>{listNhanVien.map(icon => icon.id === item.idnhanvien ? icon.ten : "")}</td>
-                                <td>{item.trangthai === false ? "Đang tạo" : item.tongtien}</td>
+                                <td>{listTrungTam.map(icon => icon.id === item.idtrungtam ? icon.ten : "")}</td>
+                                <td>{item.trangthai === false ? "Đang vận chuyển" : "Đã nhận"}</td>
+                                <td>{item.tongtien}</td>
                                 <td>
-                                    <button onClick={() => {
-                                        setIdPhieuNhap({ id: item.id })
-                                    }}>
+                                    <button onClick={() =>setIdPhieuNhap({
+                                        id: item.id
+                                    })}>
                                         <i onClick={viewDetailOpen} className="fas fa-eye"></i>
                                     </button>
-                                    <button onClick={() => {
-                                        setIdPhieuNhap({ id: item.id })
-                                    }}>
-                                        <i onClick={addDetailsOpen} className="fas fa-plus"></i>
-                                    </button>
-                                    <button onClick={() => { setDeletePhieuNhap(item) }}>
+                                    <button onClick={() => setDeletePhieuXuat(item)}>
                                         <i onClick={deleteOpen} className="fas fa-trash-alt"></i>
                                     </button>
 
@@ -207,55 +239,68 @@ function PhieuNhap() {
                 }
             </table>
 
-            {/*detail */}
+            {/*Create new Phieu Xuat */}
             <Modal
-                open={details}
-                onClose={detailsClose}
+                open={create}
+                onClose={createClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={Style_modal_add_detail}>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <div className="changePasswordInputUser">
-                            <table id="customers">
-                                <tr>
-                                    <th>tên</th>
-                                    <th>số lô</th>
-                                    <th>đơn giá</th>
-                                    <th>đối tượng sử dụng</th>
-                                    <th>Số Lượng</th>
-                                </tr>
-                                {
-                                    listDetail.map((item) => {
-                                        return (
-                                            <tr>
-                                                <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.ten : "")}</td>
-                                                <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.solo : "")}</td>
-                                                <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.dongia : "")}</td>
-                                                <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.doituongsudung : "")}</td>
-                                                <td>{item.soluong}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </table>
+                        <div className='header_create'>
+                            <div className='co_so'>
+                                <label for="coso">Cở sở:</label>
+                                <select id="coso" name="idtrungtam" onChange={handleCreate}>
+                                    <option>Chọn cơ sở</option>
+                                    {
+                                        listTrungTam.map(item => {
+                                            return (
+                                                <option value={item.id}>{item.ten} : {item.diachi}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className='tong_tien'>
+                                <label>Tổng tiền:</label>
+                                <h4>{tongTien.sum} vnđ</h4>
+                            </div>
                         </div>
+
+                        <button className="btn btn-primary" onClick={addDetailsOpen}>Thêm Sản Phẩm</button>
+                        <table id="customers">
+                            <tr>
+                                <th>tên</th>
+                                <th>số lô</th>
+                                <th>đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                            {
+                                dataCreateDetail.map((item) => {
+                                    return (
+                                        <tr>
+                                            <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.ten : "")}</td>
+                                            <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.solo : "")}</td>
+                                            <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.dongia : "")}</td>
+                                            <td>{item.soluong}</td>
+                                            <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.dongia * item.soluong : "")}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </table>
                     </Typography>
                     <div className="model_footer">
-                        <button className="btn_left btn-primary" type="button" onClick={
-                            addDetailsOpen
-                        }>Thêm</button>
                         <button className="btn_right btn-success" onClick={() => {
-                            submitCreateDetail()
-                            detailsClose()
-                            window.location.reload()
+                            submitDataCreate()
                         }} >Xác nhận</button>
                     </div>
                 </Box>
             </Modal>
-            {/*Detail */}
 
-            {/* Add Detail */}
+            {/* Detail */}
             <Modal
                 open={addDetails}
                 onClose={addDetailsClose}
@@ -290,6 +335,7 @@ function PhieuNhap() {
                                                         setDetail({
                                                             soluong: "",
                                                             idvacxin: item.id,
+                                                            dongia: item.dongia
                                                         })
                                                     }}>
                                                         <i onClick={soLuongOpen} class="fas fa-plus"></i>
@@ -321,10 +367,12 @@ function PhieuNhap() {
                             </div>
                             <br />
                             <button onClick={() => {
-                                listDetail.push(detail)
+                                dataCreateDetail.push(detail)
                                 addDetailsClose()
                                 soLuongClose()
-                                detailsOpen()
+                                setTongTien({
+                                    sum: tongTien.sum + detail.dongia*detail.soluong
+                                })
                             }}>
                                 Xác nhận
                             </button>
@@ -332,7 +380,6 @@ function PhieuNhap() {
                     </Typography>
                 </Box>
             </Modal>
-            {/* End Add Detail */}
 
             {/* View Detail */}
             <Modal
@@ -352,7 +399,7 @@ function PhieuNhap() {
                                 <th>Thành tiền</th>
                             </tr>
                             {
-                                listCTPN.map((item) => {
+                                listCTPX.map((item) => {
                                     return (
                                         <tr>
                                             <td>{listVacxin.map(icon => icon.id === item.idvacxin ? icon.ten : "")}</td>
@@ -378,7 +425,7 @@ function PhieuNhap() {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Bạn có chắc chắn muốn xóa {deletePhieuNhap.id}
+                        Bạn có chắc chắn muốn xóa {deletePhieuXuat.id}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <form onSubmit={submitDelete}>
@@ -388,8 +435,8 @@ function PhieuNhap() {
                 </Box>
             </Modal>
 
-        </div >
+        </div>
     );
 }
 
-export default PhieuNhap;
+export default PhieuXuat;

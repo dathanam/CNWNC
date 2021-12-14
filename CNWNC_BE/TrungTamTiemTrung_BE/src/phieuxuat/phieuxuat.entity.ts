@@ -16,4 +16,7 @@ export class phieuxuat{
 
   @Column() 
   tongtien: number;
+
+  @Column() 
+  trangthai: boolean;
 }

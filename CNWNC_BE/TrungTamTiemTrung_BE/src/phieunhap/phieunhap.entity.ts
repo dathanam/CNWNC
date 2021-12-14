@@ -12,9 +12,6 @@ export class phieunhap{
   idnhanvien: number;
 
   @Column() 
-  idnhacungcap: number;
-
-  @Column() 
   tongtien: number;
 
   @Column()

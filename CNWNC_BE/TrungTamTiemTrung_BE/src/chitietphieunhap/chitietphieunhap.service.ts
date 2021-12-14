@@ -20,8 +20,8 @@ export class ChitietphieunhapService {
         return await this.CTPNRepo.findOne(id)
     }
 
-    async findDetail(id: number): Promise<chitietphieunhap> {
-        return await this.CTPNRepo.query("select * from tttt.chitietphieunhap where idphieunhap = "+ id)
+    async findDetail(id: number): Promise<chitietphieunhap[]> {
+        return await this.CTPNRepo.find({idphieunhap: id});
     }
 
     async create(dataCTPN: chitietphieunhap): Promise<any> {

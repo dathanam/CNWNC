@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../NhaCungCap/NhaCungCap.css';
-import { useHistory } from "react-router-dom";
 import api from '../../API';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,8 +7,6 @@ import Modal from '@mui/material/Modal';
 import TextField from '@material-ui/core/TextField';
 
 function NhaCungCap() {
-    const history = useHistory();
-
     const [listNhaCungCap, setListNhaCungCap] = useState([]);
     const getArr = async () => {
         const response = await api.getNhaCungCap()
@@ -59,7 +56,7 @@ function NhaCungCap() {
                             diachi: ""
                         })
                         window.location.reload()
-                    }else {
+                    } else {
                         alert(res.data.message)
                         setNhaCungCapCreate({
                             ten: "",
@@ -134,10 +131,10 @@ function NhaCungCap() {
                                     }}>
                                         <i onClick={handleOpen} className="fas fa-edit"></i>
                                     </button>
-                                    <button onClick={() => {setDeleteNhaCungCap(item)}}>
-                                    <i onClick={deleteOpen} className="fas fa-trash-alt"></i>
+                                    <button onClick={() => { setDeleteNhaCungCap(item) }}>
+                                        <i onClick={deleteOpen} className="fas fa-trash-alt"></i>
                                     </button>
-                                    
+
                                 </td>
                             </tr>
                         )
@@ -177,8 +174,8 @@ function NhaCungCap() {
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         <form onSubmit={(e) => submitCreateNhaCungCap(e)}>
-                        <TextField label="Tên" variant="outlined" onChange={handleCreateNhaCungCap} id="ten" value={NhaCungCapCreate.ten} />
-                        <TextField label="Địa chỉ" variant="outlined" onChange={handleCreateNhaCungCap} id="diachi" value={NhaCungCapCreate.diachi} />
+                            <TextField label="Tên" variant="outlined" onChange={handleCreateNhaCungCap} id="ten" value={NhaCungCapCreate.ten} />
+                            <TextField label="Địa chỉ" variant="outlined" onChange={handleCreateNhaCungCap} id="diachi" value={NhaCungCapCreate.diachi} />
                             <br />
                             <button className="btn_submit">Xác nhận</button>
                         </form>

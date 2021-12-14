@@ -33,9 +33,9 @@ export class VacxinController {
 
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(Role.ADMIN, Role.PREMIUM)
-    @Put()
-    update(@Body() data,  @Param() params) {
-      return this.service.update(data, params);
+    @Put(':id')
+    updateSoLuong(@Param() params, @Body() data) {
+      return this.service.updateSoLuong(params, data.soluong);
     }
   
     @UseGuards(AuthGuard('jwt'), RolesGuard)

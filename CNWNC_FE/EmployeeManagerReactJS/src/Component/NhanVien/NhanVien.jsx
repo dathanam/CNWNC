@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../NhanVien/Nhanvien.css';
-import { useHistory } from "react-router-dom";
 import api from '../../API';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -146,7 +145,7 @@ function Nhanvien() {
 
     return (
         <div className="table_admin">
-            <button className="btn_add" onClick={CreateOpen}>Tạo mới</button>
+            <button type="button" className="btn btn-primary" onClick={CreateOpen}>Tạo mới</button>
             <table id="customers">
                 <tr>
                     <th>ID</th>

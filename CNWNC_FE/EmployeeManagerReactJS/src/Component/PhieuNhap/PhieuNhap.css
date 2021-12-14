@@ -1,0 +1,14 @@
+.model_footer{
+    margin-top: 30px;
+    text-align: center;
+}
+.btn_left{
+    margin-right: 5px;
+    font-size: 18px;
+    width: 90px;
+}
+.btn_right{
+    margin-left: 5px;
+    font-size: 18px;
+    width: 90px;
+}

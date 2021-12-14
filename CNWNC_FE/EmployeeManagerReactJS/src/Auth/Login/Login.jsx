@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../Login/Login.css';
+import '../Login/Login.scss';
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import api from '../../API';
@@ -30,6 +30,7 @@ function Login() {
                 localStorage.setItem("username", decode.username);
                 localStorage.setItem("email", decode.email);
                 localStorage.setItem("loginFrist", decode.loginFrist);
+                localStorage.setItem("idNV", decode.idNV);
                 checkFristLogin();
             })
             .catch(err => {
@@ -48,7 +49,7 @@ function Login() {
     }
 
     return (
-        <div className="loginPage">
+        <div className="loginPage1">
             <div className="login">
                 <div className="loginLogo">
                     <img src="https://pafssh.provirtualmeeting.com/wp-content/uploads/2020/09/login.png" alt="logo" />
