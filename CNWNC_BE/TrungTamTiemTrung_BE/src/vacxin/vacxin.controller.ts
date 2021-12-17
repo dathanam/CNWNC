@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Logger } from '@nestjs/common';
 import { VacxinService } from './vacxin.service';
 import { vacxin } from './vacxin.entity';
 import { AuthGuard } from '@nestjs/passport';
@@ -8,7 +8,10 @@ import { Role } from 'src/role/role.enum';
 
 @Controller('vacxin')
 export class VacxinController {
-    constructor(private readonly service: VacxinService) {}
+  logger: Logger
+    constructor(private readonly service: VacxinService) {
+      this.logger = new Logger(VacxinController.name)
+    }
 
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(Role.USER, Role.ADMIN, Role.PREMIUM)
@@ -28,6 +31,7 @@ export class VacxinController {
     @Roles(Role.ADMIN, Role.PREMIUM)
     @Post()
     create(@Body() body) {
+      this.logger.log(`create`)
       return this.service.create(body);
     }
 
@@ -42,6 +46,7 @@ export class VacxinController {
     @Roles(Role.PREMIUM)
     @Delete(':id')
     deleteUser(@Param() params) {
+      this.logger.log(`delete: ${params.id}`)
       return this.service.delete(params.id);
     }
 

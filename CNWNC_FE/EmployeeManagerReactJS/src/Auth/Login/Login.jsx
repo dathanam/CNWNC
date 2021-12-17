@@ -31,6 +31,7 @@ function Login() {
                 localStorage.setItem("email", decode.email);
                 localStorage.setItem("loginFrist", decode.loginFrist);
                 localStorage.setItem("idNV", decode.idNV);
+                localStorage.setItem("idTrungTam", decode.idTrungTam);
                 checkFristLogin();
             })
             .catch(err => {

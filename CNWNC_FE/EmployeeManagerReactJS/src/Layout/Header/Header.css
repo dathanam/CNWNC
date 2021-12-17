@@ -104,7 +104,7 @@ Link:hover{
     font-weight: bold;
     text-transform: uppercase;
     margin-top: 5px;
-    margin-left: -40px;
+    margin-left: 30px;
     font-size: 17px;
 }
 .changePasswordInputUser{
@@ -128,6 +128,15 @@ button.btn_cancel {
 }
 button.btn_save {
     background-color: springgreen;
+}
+.UserDropdown {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 50vw;
+}
+.header_trungtam{
+    font-weight: bold;
 }
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){

@@ -165,7 +165,7 @@ function PhieuNhap() {
 
     return (
         <div className="table_admin">
-            <button className="btn btn-primary" onClick={() => setNewData({
+            <button type='submit' className="btn btn-primary" onClick={() => setNewData({
                 ngay: moment(Date.now()).utc().format('DD/MM/YYYY'),
                 idnhanvien: localStorage.getItem("idNV")
             })}>Tạo mới</button>
@@ -387,7 +387,6 @@ function PhieuNhap() {
                     </Typography>
                 </Box>
             </Modal>
-
         </div >
     );
 }

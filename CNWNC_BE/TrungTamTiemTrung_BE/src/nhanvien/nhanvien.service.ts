@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { nhanvien } from './nhanvien.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,7 +13,7 @@ export class NhanVienService {
     constructor(
         @InjectRepository(nhanvien)
         private readonly nhanVienRepo: Repository<nhanvien>,
-    ) { }
+    ) {}
 
     async findAll(): Promise<nhanvien[]> {
         return await this.nhanVienRepo.find();
@@ -67,23 +67,13 @@ export class NhanVienService {
             if (check) {
                 return { statusCode: 404, message: "Tài khoản đã tồn tại trong hệ thống !" };
             }
-            const newNhanVien = new nhanvien();
-            newNhanVien.ten = dataNhanVien.ten;
-            newNhanVien.email = dataNhanVien.email;
-            newNhanVien.ngaysinh = dataNhanVien.ngaysinh;
-            newNhanVien.vitri = dataNhanVien.vitri;
-            newNhanVien.bangcap = dataNhanVien.bangcap;
-            newNhanVien.luong = dataNhanVien.luong;
-            newNhanVien.diachi = dataNhanVien.diachi;
-            newNhanVien.sdt = dataNhanVien.sdt;
-            newNhanVien.username = dataNhanVien.username;
-            newNhanVien.password = dataNhanVien.password;
-            newNhanVien.loginfirst = 0;
-            newNhanVien.code = code;
-            newNhanVien.checkcode = false
-
+            dataNhanVien.loginfirst = 0;
+            dataNhanVien.code = code;
+            dataNhanVien.checkcode = false,
+            dataNhanVien.quyen = Role.USER,
+            dataNhanVien.idtrungtam = 1
             await this.sendEmail(dataNhanVien.email);
-            await this.nhanVienRepo.save(newNhanVien);
+            await this.nhanVienRepo.save(dataNhanVien);
 
             return { statusCode: 200, message: "Thêm thành công. Mã code đã được gửi tới Email của bạn !"};
         } catch (error) {

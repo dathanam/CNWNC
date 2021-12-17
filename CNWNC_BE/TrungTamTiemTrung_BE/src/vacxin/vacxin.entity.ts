@@ -28,4 +28,7 @@ export class vacxin{
 
   @Column()
   baoquan: string;
+
+  @Column()
+  gianhap: number;
 }

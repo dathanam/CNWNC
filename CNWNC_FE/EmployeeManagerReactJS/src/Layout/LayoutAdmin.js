@@ -6,6 +6,7 @@ import Vacxin from '../Component/Vacxin/Vacxin.jsx';
 import NhaCungCap from '../Component/NhaCungCap/NhaCungCap.jsx';
 import PhieuNhap from '../Component/PhieuNhap/PhieuNhap.jsx';
 import PhieuXuat from '../Component/PhieuXuat/PhieuXuat.jsx';
+import Kho from '../Component/Kho/Kho.jsx';
 
 function LayoutAdmin() {
     return (
@@ -18,6 +19,7 @@ function LayoutAdmin() {
                     <Route path="/admin/nhacungcap" component={NhaCungCap} />
                     <Route path="/admin/phieunhap" component={PhieuNhap} />
                     <Route path="/admin/phieuxuat" component={PhieuXuat} />
+                    <Route path="/admin/kho" component={Kho} />
                 </Switch>
             </Router>
         </div>

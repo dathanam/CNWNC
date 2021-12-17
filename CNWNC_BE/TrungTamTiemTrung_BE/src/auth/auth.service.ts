@@ -30,7 +30,7 @@ export class AuthService {
                 return { statusCode: 404, message: "Không tìm thấy tài khoản"}
             } else {
                 if (userFind.password === dataUser.password) {
-                    const payload = { username: userFind.username, email: userFind.email, role: userFind.quyen, loginFrist: userFind.loginfirst, idNV: userFind.id }
+                    const payload = { username: userFind.username, email: userFind.email, role: userFind.quyen, loginFrist: userFind.loginfirst, idNV: userFind.id, idTrungTam: userFind.idtrungtam }
                     return {
                         accessToken: this.jwtService.sign(payload, { expiresIn: 60 * 60 }),
                         expiresIn: 60 * 60

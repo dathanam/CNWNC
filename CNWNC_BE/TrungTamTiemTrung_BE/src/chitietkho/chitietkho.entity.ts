@@ -12,5 +12,5 @@ export class chitietkho{
   idvacxin: number;
 
   @Column() 
-  idkho: number;
+  idtrungtam: number;
 }

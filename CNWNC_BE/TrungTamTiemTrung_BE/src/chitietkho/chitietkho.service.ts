@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { chitietkho } from './chitietkho.entity'; 
+import { chitietkho } from './chitietkho.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -10,8 +10,12 @@ export class ChitietkhoService {
         private readonly Repo: Repository<chitietkho>,
     ) { }
 
-    async findAll(): Promise<chitietkho[]> {
-        return await this.Repo.find();
+    async findAll(data): Promise<any> {
+        if (data.idtrungtam == 1) {
+            return await this.Repo.query("select * from tttt.chitietkho");
+        } else {
+            return await this.Repo.query("select * from tttt.chitietkho where idtrungtam = " + data.idtrungtam);
+        }
     }
 
     async findOne(id: number): Promise<chitietkho> {
@@ -20,33 +24,23 @@ export class ChitietkhoService {
 
     async create(data: chitietkho): Promise<any> {
         try {
-            const check = await this.Repo.findOne({ idvacxin: data.idvacxin, idkho: data.idkho })
-            if (check) {
-                return { statusCode: 404, message: "đã tồn tại trong hệ thống !" };
-            }
-            const dataNew= new chitietkho();
+            const check = await this.Repo.findOne({ idvacxin: data.idvacxin })
+            // if (check) {
+            //     check.soluong = data.soluong
+            //     await this.Repo.update(check.id, check);
+            // }
+            const dataNew = new chitietkho();
             dataNew.idvacxin = data.idvacxin;
-            dataNew.idkho = data.idkho;
+            dataNew.idtrungtam = data.idtrungtam;
             dataNew.soluong = data.soluong;
 
             await this.Repo.save(dataNew);
-            return { statusCode: 200, message: "Thêm thành công!", dataNew};
+            return { statusCode: 200, message: "Thêm thành công!", dataNew };
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
 
-    async update(data: chitietkho, id: number): Promise<any> {
-        try {
-            const vx = await this.Repo.findOne({id: id})
-            if(!vx) return { statusCode: 404, message: "không tồn tại trong hệ thống !" };
-            vx.soluong = data.soluong;
-            await this.Repo.update(id, vx);
-            return { statusCode: 200, message: "Sửa thành công !"}
-        } catch (error) {
-            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
-        }
-    }
 
     async delete(id): Promise<any> {
         try {

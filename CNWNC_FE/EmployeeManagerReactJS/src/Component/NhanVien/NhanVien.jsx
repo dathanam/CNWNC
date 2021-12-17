@@ -36,7 +36,7 @@ function Nhanvien() {
     const [create, setCreate] = React.useState(false);
     const CreateOpen = () => setCreate(true);
     const CreateClose = () => setCreate(false);
-    const [nhanVienCreate, setnhanVienCreate] = useState([{
+    const [nhanVienCreate, setnhanVienCreate] = useState({
         ten: "",
         email: "",
         ngaysinh: "",
@@ -47,7 +47,7 @@ function Nhanvien() {
         sdt: "",
         username: "",
         password: "",
-    }]);
+    });
     function handleCreateNhanVien(event) {
         const newdata = { ...nhanVienCreate };
         newdata[event.target.id] = event.target.value;
@@ -57,6 +57,7 @@ function Nhanvien() {
         e.preventDefault();
         api.createNhanVien(nhanVienCreate)
             .then((res) => {
+                console.log(res)
                 if (res.data.statusCode === 200) {
                     alert("Mật khẩu đã được gửi tới " + nhanVienCreate.email);
                     setnhanVienCreate({

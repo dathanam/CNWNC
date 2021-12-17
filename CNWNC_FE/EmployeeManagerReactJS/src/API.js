@@ -64,4 +64,7 @@ export default {
   createChiTietPhieuXuat:(data) => axios.post('/chitietphieuxuat', data),
   getDetailPX:(idPhieuXuat) => axios.get('/chitietphieuxuat/'+idPhieuXuat),
 
+  // Chi tiet kho
+  getChiTietKho:(idtrungtam) => axios.get('/chitietkho/'+idtrungtam),
+  createChiTietKho:(data) => axios.post('/chitietkho', data),
 }

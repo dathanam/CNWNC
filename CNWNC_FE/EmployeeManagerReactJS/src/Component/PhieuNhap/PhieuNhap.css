@@ -12,3 +12,25 @@
     font-size: 18px;
     width: 90px;
 }
+
+.header_create {
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+}
+.co_so{
+    margin-right: 50px;
+}
+.co_so select{
+    margin-left: 5px;
+    margin-bottom: 40px;
+}
+.tong_tien{
+    margin-left: 50px;
+    display: flex;
+}
+.tong_tien h4{
+    margin-left: 5px;
+    color: red;
+    margin-top: -2px;
+}

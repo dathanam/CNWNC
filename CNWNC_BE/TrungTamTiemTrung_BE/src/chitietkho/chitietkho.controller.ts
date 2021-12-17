@@ -11,17 +11,10 @@ export class ChitietkhoController {
     constructor(private readonly service: ChitietkhoService) {}
 
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(Role.USER, Role.ADMIN, Role.PREMIUM)
-    @Get()
-    findAll(): Promise<chitietkho[]> {
-      return this.service.findAll()
-    }
-  
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(Role.USER, Role.ADMIN, Role.PREMIUM)
-    @Get(':id')
-    get(@Param() params) {
-      return this.service.findOne(params.id);
+    @Roles(Role.ADMIN, Role.PREMIUM)
+    @Get(':idtrungtam')
+    findAll(@Param() params): Promise<chitietkho[]> {
+      return this.service.findAll(params)
     }
   
     @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -30,16 +23,9 @@ export class ChitietkhoController {
     create(@Body() body) {
       return this.service.create(body);
     }
-
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(Role.ADMIN, Role.PREMIUM)
-    @Put()
-    update(@Body() data,  @Param() params) {
-      return this.service.update(data, params);
-    }
   
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(Role.PREMIUM)
+    @Roles(Role.ADMIN)
     @Delete(':id')
     deleteUser(@Param() params) {
       return this.service.delete(params.id);

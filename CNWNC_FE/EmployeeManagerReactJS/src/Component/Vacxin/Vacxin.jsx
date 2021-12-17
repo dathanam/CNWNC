@@ -44,7 +44,8 @@ function Vacxin() {
         hansudung: "",
         doituongsudung: "",
         solo: "",
-        baoquan: ""
+        baoquan: "",
+        gianhap: "",
     }]);
     function handleCreateVacxin(event) {
         const newdata = { ...VacxinCreate };
@@ -66,7 +67,8 @@ function Vacxin() {
                             hansudung: "",
                             doituongsudung: "",
                             solo: "",
-                            baoquan: ""
+                            baoquan: "",
+                            gianhap: "",
                         })
                         window.location.reload()
                     } else {
@@ -79,7 +81,8 @@ function Vacxin() {
                             hansudung: "",
                             doituongsudung: "",
                             solo: "",
-                            baoquan: ""
+                            baoquan: "",
+                            gianhap: "",
                         })
                     }
                 }
@@ -94,7 +97,8 @@ function Vacxin() {
                     hansudung: "",
                     doituongsudung: "",
                     solo: "",
-                    baoquan: ""
+                    baoquan: "",
+                    gianhap: "",
                 })
             })
     }
@@ -108,7 +112,6 @@ function Vacxin() {
         api.deleteVacxin(deleteVacxin.id)
     }
     //end delete
-
     return (
         <div className="table_admin">
             <button className="btn btn-primary" onClick={CreateOpen}>Tạo mới</button>
@@ -139,10 +142,10 @@ function Vacxin() {
                                 <td>{item.solo}</td>
                                 <td>{item.baoquan}</td>
                                 <td>
-                                    <button onClick={() => {setDeleteVacxin(item)}}>
-                                    <i onClick={deleteOpen} className="fas fa-trash-alt"></i>
+                                    <button onClick={() => { setDeleteVacxin(item) }}>
+                                        <i onClick={deleteOpen} className="fas fa-trash-alt"></i>
                                     </button>
-                                    
+
                                 </td>
                             </tr>
                         )
@@ -177,7 +180,8 @@ function Vacxin() {
 
                                 </div>
                                 <div className="col-6">
-                                    <TextField label="Số lô" variant="outlined" onChange={handleCreateVacxin} id="solo" value={VacxinCreate.solo} />
+                                    <TextField label="Giá nhập" variant="outlined" onChange={handleCreateVacxin} id="gianhap" value={VacxinCreate.gianhap} />
+
                                 </div>
                             </div>
 
@@ -192,11 +196,14 @@ function Vacxin() {
                             <div className="row rowCreate">
                                 <div className="col-6">
                                     <TextField label="Đối tượng sử dụng" variant="outlined" onChange={handleCreateVacxin} id="doituongsudung" value={VacxinCreate.doituongsudung} />
-
                                 </div>
                                 <div className="col-6">
                                     <TextField label="Bảo quản" variant="outlined" onChange={handleCreateVacxin} id="baoquan" value={VacxinCreate.baoquan} />
-
+                                </div>
+                            </div>
+                            <div className="row rowCreate">
+                                <div className="col-6">
+                                    <TextField label="Số lô" variant="outlined" onChange={handleCreateVacxin} id="solo" value={VacxinCreate.solo} />
                                 </div>
                             </div>
                             <br />

@@ -18,6 +18,8 @@ function PhieuXuat() {
         }
     }
 
+    console.log(listPhieuXuat)
+
     const [listNhanVien, setListNhanVien] = useState([]);
     const getArrNV = async () => {
         const response = await api.getNhanVien()
@@ -66,6 +68,7 @@ function PhieuXuat() {
     const deleteClose = () => setDeleteModel(false);
 
     const [dataCreateDetail, setDataCreateDetail] = useState([])
+    const [dataCreateChiTietKho, setDataCreateChiTietKho] = useState([])
     const [detail, setDetail] = useState({
         soluong: "",
         idvacxin: "",
@@ -97,8 +100,11 @@ function PhieuXuat() {
             var newdata = { ...item, idphieuxuat: id }
             api.createChiTietPhieuXuat(newdata)
             var newdataSL = { soluong: item.soluong}
-            console.log(newdataSL)
             api.updateSoLuong(item.idvacxin, newdataSL)
+
+            var dataChiTietKho = {...item, idtrungtam: dataCreate.idtrungtam }
+            delete dataChiTietKho.dongia
+            api.createChiTietKho(dataChiTietKho)
         })
         setDataCreateDetail([])
     }
@@ -217,7 +223,7 @@ function PhieuXuat() {
                         return (
                             <tr>
                                 <td>{item.id}</td>
-                                <td>{moment(item.ngay).utc().format('DD/MM/YYYY')}</td>
+                                <td>{item.ngay}</td>
                                 <td>{listNhanVien.map(icon => icon.id === item.idnhanvien ? icon.ten : "")}</td>
                                 <td>{listTrungTam.map(icon => icon.id === item.idtrungtam ? icon.ten : "")}</td>
                                 <td>{item.trangthai === false ? "Đang vận chuyển" : "Đã nhận"}</td>
@@ -263,7 +269,7 @@ function PhieuXuat() {
                                 </select>
                             </div>
                             <div className='tong_tien'>
-                                <label>Tổng tiền:</label>
+                                {/* <label>Tổng tiền:</label> */}
                                 <h4>{tongTien.sum} vnđ</h4>
                             </div>
                         </div>

@@ -47,4 +47,7 @@ export class nhanvien{
 
   @Column() 
   checkcode: boolean;
+
+  @Column() 
+  idtrungtam: number;
 }

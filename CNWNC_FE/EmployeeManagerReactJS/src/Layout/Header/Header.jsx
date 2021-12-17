@@ -7,6 +7,7 @@ import { axios } from '../../HeaderAPI';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import api from '../../API';
 
 function Header() {
     const history = useHistory();
@@ -85,6 +86,20 @@ function Header() {
         setDataChangePassword(newdata);
     }
 
+    const [listTrungTam, setListTrungTam] = useState([]);
+    const getArrTT = async () => {
+        const response = await api.getTrungTam()
+        if (response && response.data) {
+            setListTrungTam(response.data)
+        }
+    }
+    console.log(listTrungTam)
+    useEffect(() => {
+        getArrTT()
+    }, []);
+
+    const idTrungTam = localStorage.getItem("idTrungTam")
+
     return (
         <div className="adminHeader">
             <div className="adminLogo">
@@ -98,20 +113,14 @@ function Header() {
                     <li>
                         <Link to="/admin/vacxin" className="nav-link">Vacxin</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/admin/phieunhap" className="nav-link">Phiếu nhập</Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link to="/admin/phieuxuat" className="nav-link">Phiếu xuất</Link>
                     </li>
                     <li>
-                        <Link to="/admin/employee" className="nav-link">Trung tâm</Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/employee" className="nav-link">Kho</Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/employee" className="nav-link">Xuất kho</Link>
+                        <Link to="/admin/kho" className="nav-link">Kho</Link>
                     </li>
                     {/* {
                         localStorage.getItem("role") === "0" ? '' : <li><Link to="/signup" className="nav-link">SignUp</Link></li>
@@ -119,6 +128,11 @@ function Header() {
 
                     <div className="AdminLog">
                         <div className="UserDropdown">
+                            <h5 className='header_trungtam'>
+                                {
+                                    listTrungTam.map(icon => icon.id == idTrungTam ? icon.ten : "")
+                                }
+                                </h5>
                             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 <p className="p_user"><i className="far fa-user"></i> {localStorage.getItem("username")}</p>
                             </Button>

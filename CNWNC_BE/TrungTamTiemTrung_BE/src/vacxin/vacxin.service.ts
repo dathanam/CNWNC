@@ -24,25 +24,25 @@ export class VacxinService {
             if (check) {
                 return { statusCode: 404, message: "Vacxin đã tồn tại trong hệ thống !" };
             }
-            const newVacxin= new vacxin();
-            newVacxin.ten = dataVacxin.ten;
-            newVacxin.soluong = dataVacxin.soluong;
-            newVacxin.dongia = dataVacxin.dongia;
-            newVacxin.ngaysanxuat = dataVacxin.ngaysanxuat;
-            newVacxin.hansudung = dataVacxin.hansudung;
-            newVacxin.doituongsudung = dataVacxin.doituongsudung;
-            newVacxin.solo = dataVacxin.solo;
-            newVacxin.baoquan = dataVacxin.baoquan;
+            // const newVacxin= new vacxin();
+            // newVacxin.ten = dataVacxin.ten;
+            // newVacxin.soluong = dataVacxin.soluong;
+            // newVacxin.gianhap = dataVacxin.gianhap;
+            // newVacxin.dongia = dataVacxin.dongia;
+            // newVacxin.ngaysanxuat = dataVacxin.ngaysanxuat;
+            // newVacxin.hansudung = dataVacxin.hansudung;
+            // newVacxin.doituongsudung = dataVacxin.doituongsudung;
+            // newVacxin.solo = dataVacxin.solo;
+            // newVacxin.baoquan = dataVacxin.baoquan;
 
-            await this.vacxinRepo.save(newVacxin);
-            return { statusCode: 200, message: "Thêm thành công!", newVacxin};
+            await this.vacxinRepo.save(dataVacxin);
+            return { statusCode: 200, message: "Thêm thành công!", dataVacxin};
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
 
     async updateSoLuong(id: number, soluong: number): Promise<any> {
-        console.log(id, soluong)
         try {
             const vx = await this.vacxinRepo.findOne({id: id})
             if(!vx) return { statusCode: 404, message: "vacxin không tồn tại trong hệ thống !" };

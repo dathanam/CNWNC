@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Logger } from '@nestjs/common';
 import { PhieunhapService } from './phieunhap.service';
 import { phieunhap } from './phieunhap.entity';
 import { AuthGuard } from '@nestjs/passport';
@@ -8,12 +8,16 @@ import { Role } from 'src/role/role.enum';
 
 @Controller('phieunhap')
 export class PhieunhapController {
-    constructor(private readonly service: PhieunhapService) {}
+    logger: Logger;
+    constructor(private readonly service: PhieunhapService) {
+      this.logger = new Logger(PhieunhapController.name)
+    }
 
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(Role.USER, Role.ADMIN, Role.PREMIUM)
     @Get()
     findAll(): Promise<phieunhap[]> {
+     // this.logger.log('findAll')
       return this.service.findAll()
     }
   
@@ -28,6 +32,7 @@ export class PhieunhapController {
     @Roles(Role.ADMIN, Role.PREMIUM)
     @Post()
     create(@Body() body) {
+      this.logger.log('create')
       return this.service.create(body);
     }
 
@@ -35,6 +40,7 @@ export class PhieunhapController {
     @Roles(Role.ADMIN, Role.PREMIUM)
     @Put(':id')
     update(@Param() params) {
+      this.logger.log(`update: ${params.id}`)
       return this.service.update(params);
     }
  
@@ -42,6 +48,7 @@ export class PhieunhapController {
     @Roles(Role.ADMIN, Role.PREMIUM)
     @Delete(':id')
     deleteUser(@Param() params) {
+      this.logger.log(`delete: ${params.id}`)
       return this.service.delete(params.id);
     }
 

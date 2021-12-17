@@ -7,23 +7,12 @@ import { AuthModule } from './auth/auth.module';
 import { VacxinModule } from './vacxin/vacxin.module';
 import { PhieunhapModule } from './phieunhap/phieunhap.module';
 import { NhacungcapModule } from './nhacungcap/nhacungcap.module';
-import { PhieunhapController } from './phieunhap/phieunhap.controller';
-import { ChitietphieunhapController } from './chitietphieunhap/chitietphieunhap.controller';
 import { ChitietphieunhapModule } from './chitietphieunhap/chitietphieunhap.module';
-import { PhieuxuatController } from './phieuxuat/phieuxuat.controller';
 import { PhieuxuatModule } from './phieuxuat/phieuxuat.module';
-import { ChitietphieuxuatController } from './chitietphieuxuat/chitietphieuxuat.controller';
 import { ChitietphieuxuatModule } from './chitietphieuxuat/chitietphieuxuat.module';
-import { TrungtamController } from './trungtam/trungtam.controller';
 import { TrungtamModule } from './trungtam/trungtam.module';
 import { KhoModule } from './kho/kho.module';
-import { ChitietkhoController } from './chitietkho/chitietkho.controller';
-import { ChitietkhoService } from './chitietkho/chitietkho.service';
 import { ChitietkhoModule } from './chitietkho/chitietkho.module';
-import { XuatkhoController } from './xuatkho/xuatkho.controller';
-import { XuatkhoModule } from './xuatkho/xuatkho.module';
-import { ChitietxuatkhoController } from './chitietxuatkho/chitietxuatkho.controller';
-import { ChitietxuatkhoModule } from './chitietxuatkho/chitietxuatkho.module';
 
 @Module({
   imports: [
@@ -47,9 +36,7 @@ import { ChitietxuatkhoModule } from './chitietxuatkho/chitietxuatkho.module';
     ChitietphieuxuatModule,
     TrungtamModule,
     KhoModule,
-    ChitietkhoModule,
-    XuatkhoModule,
-    ChitietxuatkhoModule
+    ChitietkhoModule
   ],
   controllers: [AppController],
   providers: [AppService],
