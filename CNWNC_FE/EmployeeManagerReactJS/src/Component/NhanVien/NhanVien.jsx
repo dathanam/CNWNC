@@ -90,7 +90,6 @@ function Nhanvien() {
                 }
             })
             .catch((err) => {
-                alert("Error!")
                 setnhanVienCreate({
                     ten: "",
                     email: "",
@@ -103,6 +102,7 @@ function Nhanvien() {
                     username: "",
                     password: "",
                 })
+                window.location.reload()
             })
     }
     //end create

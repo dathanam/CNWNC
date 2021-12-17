@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { nhanvien } from 'src/nhanvien/nhanvien.entity';
 
+var crypto = require('crypto-js');
 
 @Injectable()
 export class AuthService {
@@ -25,11 +26,14 @@ export class AuthService {
 
     async login(dataUser: nhanvien) {
         try {
+            console.log(dataUser)
             const userFind = await this.nhanvienService.findUser(dataUser.username);
             if (!userFind) {
-                return { statusCode: 404, message: "Không tìm thấy tài khoản"}
+                return { statusCode: 404, message: "Không tìm thấy tài khoản" }
             } else {
-                if (userFind.password === dataUser.password) {
+                var bytes = crypto.AES.decrypt(userFind.password, '123');
+                var password_decode = bytes.toString(crypto.enc.Utf8);
+                if (password_decode === dataUser.password) {
                     const payload = { username: userFind.username, email: userFind.email, role: userFind.quyen, loginFrist: userFind.loginfirst, idNV: userFind.id, idTrungTam: userFind.idtrungtam }
                     return {
                         accessToken: this.jwtService.sign(payload, { expiresIn: 60 * 60 }),

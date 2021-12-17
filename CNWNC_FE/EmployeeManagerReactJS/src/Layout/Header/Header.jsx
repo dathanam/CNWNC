@@ -64,21 +64,32 @@ function Header() {
 
     function submitChangePass(e) {
         e.preventDefault();
-        axios.put("nhanvien/changepass", changePassword)
-            .then((res) => {
-                alert("Thay đổi mật khẩu thành công!");
-                handleClose();
-                handleCloseChangePass();
-            })
-            .catch(err => {
-                setDataChangePassword({
-                    username: localStorage.getItem("username"),
-                    oldPass: "",
-                    newPass: "",
-                    confirm: ""
+        if (changePassword.newPass != changePassword.confirm) {
+            alert("sai thông tin")
+        }
+        else {
+            axios.put("nhanvien/changepass", changePassword)
+                .then((res) => {
+                    alert("Thay đổi mật khẩu thành công!");
+                    handleClose();
+                    handleCloseChangePass();
+                    setDataChangePassword({
+                        username: localStorage.getItem("username"),
+                        oldPass: "",
+                        newPass: "",
+                        confirm: ""
+                    })
                 })
-                alert("Error")
-            })
+                .catch(err => {
+                    setDataChangePassword({
+                        username: localStorage.getItem("username"),
+                        oldPass: "",
+                        newPass: "",
+                        confirm: ""
+                    })
+                    alert("Error")
+                })
+        }
     }
     function handleChangePass(e) {
         const newdata = { ...changePassword };
@@ -132,7 +143,7 @@ function Header() {
                                 {
                                     listTrungTam.map(icon => icon.id == idTrungTam ? icon.ten : "")
                                 }
-                                </h5>
+                            </h5>
                             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 <p className="p_user"><i className="far fa-user"></i> {localStorage.getItem("username")}</p>
                             </Button>
