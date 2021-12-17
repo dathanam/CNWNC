@@ -214,7 +214,7 @@ function PhieuXuat() {
                     <th>Ngày</th>
                     <th>Nhân viên</th>
                     <th>Cơ sở</th>
-                    <th>Trạng thái</th>
+                    {/* <th>Trạng thái</th> */}
                     <th>Tổng tiền</th>
                     <th>#</th>
                 </tr>
@@ -226,7 +226,7 @@ function PhieuXuat() {
                                 <td>{item.ngay}</td>
                                 <td>{listNhanVien.map(icon => icon.id === item.idnhanvien ? icon.ten : "")}</td>
                                 <td>{listTrungTam.map(icon => icon.id === item.idtrungtam ? icon.ten : "")}</td>
-                                <td>{item.trangthai === false ? "Đang vận chuyển" : "Đã nhận"}</td>
+                                {/* <td>{item.trangthai === false ? "Đang vận chuyển" : "Đã nhận"}</td> */}
                                 <td>{item.tongtien}</td>
                                 <td>
                                     <button onClick={() =>setIdPhieuNhap({

@@ -109,10 +109,10 @@ export class NhanVienService {
         }
     }
 
-    async changePass(data: nhanvien): Promise<any> {
+    async changePass(data): Promise<any> {
         try {
             let nv = await this.nhanVienRepo.findOne({username: data.username})
-            nv = data;
+            nv.password = data.newPass;
             await this.nhanVienRepo.update(nv.id, nv);
             return { statusCode: 200, message: "Sửa thành công !"}
         } catch (error) {

@@ -51,13 +51,11 @@ export class PhieunhapService {
 
     async update(idPN: number){
         try {
-            console.log("CTPN", idPN)
             var ListDetail = await this.CTPhieuNhapRepo.findDetail(Object.values(idPN)[0]);
             var Tong = 0;
             for(var i in ListDetail){
                 Tong += ListDetail[i].thanhtien
             }
-            console.log(Tong)
             let nv = await this.PNRepo.findOne(idPN)
             nv.tongtien = Tong;
             nv.trangthai = true;

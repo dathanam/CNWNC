@@ -29,8 +29,9 @@ export class AppController {
     return this.NhanVienService.updateCheckCode(data);
   }
 
-  @Get('uploads:photo')
-  serverImage(@Param('photo') photo, @Res() res): Promise<any> {
-      return res.readFile(photo, { root: 'uploads' })
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Put('nhanvien/changepass')
+  changePass(@Body() data) {
+    return this.NhanVienService.changePass(data);
   }
 }

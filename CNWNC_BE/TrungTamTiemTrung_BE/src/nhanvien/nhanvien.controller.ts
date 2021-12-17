@@ -44,12 +44,6 @@ export class NhanVienController {
       this.logger.log(`update: ${params.id}`)
       return this.service.update(data, params);
     }
-
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Put('changepass')
-    changePass(@Body() data) {
-      return this.service.changePass(data);
-    }
   
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles(Role.PREMIUM)

@@ -64,7 +64,7 @@ function Header() {
 
     function submitChangePass(e) {
         e.preventDefault();
-        axios.put("/user/auth/changePassword", changePassword)
+        axios.put("nhanvien/changepass", changePassword)
             .then((res) => {
                 alert("Thay đổi mật khẩu thành công!");
                 handleClose();
